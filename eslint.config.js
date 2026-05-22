@@ -18,7 +18,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['./index.js'],
+    files: ['./index.js', './models/db.js'],
     rules: {
       'no-console': 'off',
     },
