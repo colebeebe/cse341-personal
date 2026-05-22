@@ -3,6 +3,7 @@ import { fileURLToPath } from 'url';
 import path from 'path';
 import routes from './controllers/routes.js';
 import { connectDB } from './models/db.js';
+import cors from './middleware/cors.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -11,6 +12,8 @@ const PORT = process.env.PORT || 3000;
 const app = express();
 
 app.use(express.json());
+
+app.use(cors);
 
 app.use('/', routes);
 
