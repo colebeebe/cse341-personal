@@ -1,16 +1,16 @@
 import { getDB } from '../models/db.js';
 
-export const getMovies = async (req, res) => {
+export const getBooks = async (req, res) => {
   const db = getDB();
-  const collection = db.collection('movies');
+  const collection = db.collection('books');
   const items = await collection.find({}).toArray();
 
   res.send(items);
 };
 
-export const postMovie = async (req, res) => {
+export const postBook = async (req, res) => {
   const db = getDB();
-  const collection = db.collection('movies');
+  const collection = db.collection('books');
   await collection.insertOne(req.body);
   res.send(req.body);
 };

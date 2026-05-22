@@ -1,9 +1,9 @@
 import { Router } from 'express';
-import { getMovies, postMovie } from './movies.js';
+import { getBooks, postBook } from './books.js';
 
 const routes = Router();
 
-routes.get('/movies', getMovies);
-routes.post('/movies', postMovie);
+routes.get('/books', getBooks);
+routes.post('/books', postBook);
 
 export default routes;
