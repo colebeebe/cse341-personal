@@ -1,6 +1,6 @@
 const corsMiddleware = (req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHader(
+  res.setHeader(
     'Access-Control-Headers',
     'Origin, X-Requested-With, Content-Type, Accept, Z-Key',
   );
