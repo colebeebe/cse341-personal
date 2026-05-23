@@ -13,4 +13,17 @@ routes.use('/api-docs', apiRouter);
 routes.get('/books', getBooks);
 routes.post('/books', postBook);
 
+// "Design-first" methods
+routes.get('/books/:id', (req, res) => {
+  res.send('GET by id');
+});
+
+routes.put('/books/:id', (req, res) => {
+  res.send('PUT (by id)');
+});
+
+routes.delete('/books/:id', (req, res) => {
+  res.send('DELETE (by id)');
+});
+
 export default routes;
