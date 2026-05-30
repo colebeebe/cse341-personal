@@ -18,6 +18,12 @@ Content-Type: application/json
     "pageCount": 320
 }
 ###
+PATCH http://localhost:3000/books/6a10bae9df4b8c8d10849d4e
+Content-Type: application/json
+
+{
+    "name": "Harry Potter and the Sorceror's Stone"
+}
 
 // PRODUCTION
 ###

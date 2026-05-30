@@ -5,21 +5,27 @@ import {
   optionalValidation,
 } from '../../middleware/validators.js';
 import {
-  getBooks,
+  getAllBooks,
   getBookById,
   createBook,
-  editBook,
+  updateBook,
+  patchBook,
   deleteBook,
 } from './controller.js';
 
+/**
+ * Base route: /books
+ */
 const router = Router();
 
-router.get('/', getBooks);
+router.get('/', getAllBooks);
 router.get('/:id', getBookById);
 
 router.post('/', rejectUnkownFields, fullValidation, createBook);
 
-router.put('/:id', rejectUnkownFields, optionalValidation, editBook);
+router.put('/:id', rejectUnkownFields, fullValidation, updateBook);
+
+router.patch('/:id', rejectUnkownFields, optionalValidation, patchBook);
 
 router.delete('/:id', deleteBook);
 

@@ -1,5 +1,8 @@
 import { body } from 'express-validator';
 
+/**
+ * Allowed fields in a given book resource
+ */
 const allowed = [
   'name',
   'publicationYear',
@@ -10,6 +13,9 @@ const allowed = [
   'pageCount',
 ];
 
+/**
+ * Middleware to prevent adding fields that don't belong to a book resource
+ */
 export const rejectUnkownFields = (req, res, next) => {
   const unknown = Object.keys(req.body).filter((key) => !allowed.includes(key));
 
@@ -22,6 +28,9 @@ export const rejectUnkownFields = (req, res, next) => {
   next();
 };
 
+/**
+ * Validation asserting that all fields must be present
+ */
 export const fullValidation = [
   body('name').trim().notEmpty().withMessage('Name must not be empty'),
   body('publicationYear')
@@ -56,6 +65,9 @@ export const fullValidation = [
   body('pageCount').isInt().withMessage('Page count must be a number').toInt(),
 ];
 
+/**
+ * Validation for PATCH (fields are otptional)
+ */
 export const optionalValidation = [
   body('name')
     .trim()
