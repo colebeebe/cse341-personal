@@ -81,7 +81,6 @@ Content-Type: application/json
 }
 ###
 PATCH https://cse341-personal-606w.onrender.com/books/6a10bae9df4b8c8d10849d4e
-
 Content-Type: application/json
 
 {
