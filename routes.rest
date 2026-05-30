@@ -18,12 +18,31 @@ Content-Type: application/json
     "pageCount": 320
 }
 ###
+PUT http://localhost:3000/books/6a10bae9df4b8c8d10849d4e
+Content-Type: application/json
+
+{
+    "name": "Harry Potter and the Philosopher's Stone",
+    "publicationYear": 1998,
+    "publisher": "Scholastic Corporation",
+    "author": "J. K. Rowling",
+    "genres": [
+        "fantasy",
+        "young adult"
+    ],
+    "format": "paperback",
+    "pageCount": 320
+}
+###
 PATCH http://localhost:3000/books/6a10bae9df4b8c8d10849d4e
 Content-Type: application/json
 
 {
     "name": "Harry Potter and the Sorceror's Stone"
 }
+###
+DELETE http://localhost:3000/books/6a10b6e3fa32a82c59d362a1
+###
 
 // PRODUCTION
 ###
@@ -44,4 +63,30 @@ Content-Type: application/json
     "format": "paperback",
     "pageCount": 320
 }
+###
+PUT https://cse341-personal-606w.onrender.com/books/6a10bae9df4b8c8d10849d4e
+Content-Type: application/json
+
+{
+    "name": "Harry Potter and the Philosopher's Stone",
+    "publicationYear": 1998,
+    "publisher": "Scholastic Corporation",
+    "author": "J. K. Rowling",
+    "genres": [
+        "fantasy",
+        "young adult"
+    ],
+    "format": "paperback",
+    "pageCount": 320
+}
+###
+PATCH https://cse341-personal-606w.onrender.com/books/6a10bae9df4b8c8d10849d4e
+
+Content-Type: application/json
+
+{
+    "name": "Harry Potter and the Sorceror's Stone"
+}
+###
+DELETE https://cse341-personal-606w.onrender.com/books/6a10b6e3fa32a82c59d362a1
 ###
