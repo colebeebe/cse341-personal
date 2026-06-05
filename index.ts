@@ -1,7 +1,7 @@
 import express from 'express';
 
-import { connectDB } from '#models/db.js';
-import router from '#routes/index.js';
+import { connectDB } from './models/db.js';
+import router from './routes/index.js';
 
 const PORT = process.env.PORT || 3000;
 

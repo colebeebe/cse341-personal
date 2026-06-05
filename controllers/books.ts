@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import getDB from '#models/db.js';
+import getDB from '../models/db.js';
 import { ObjectId } from 'mongodb';
 import { validationResult } from 'express-validator';
 

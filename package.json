@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "tsx index.ts",
-    "preview": "node dist/index.js",
+    "start": "pnpm dist/index.js",
+    "preview": "node --env-file=.env dist/index.js",
     "build": "tsc",
     "dev": "tsx --watch --env-file=.env index.ts",
     "type-check": "tsc --noEmit",

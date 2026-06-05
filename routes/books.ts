@@ -4,7 +4,7 @@ import {
   rejectUnknownFields,
   fullValidation,
   optionalValidation,
-} from '#middleware/validators.js';
+} from '../middleware/validators.js';
 
 import {
   getAllBooks,
@@ -13,7 +13,7 @@ import {
   updateBook,
   patchBook,
   deleteBook,
-} from '#controllers/books.js';
+} from '../controllers/books.js';
 
 const router = Router();
 
