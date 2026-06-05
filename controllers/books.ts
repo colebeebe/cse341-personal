@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import getDB from '../models/db.js';
 import { ObjectId } from 'mongodb';
 import { validationResult } from 'express-validator';
@@ -63,7 +63,13 @@ export const createBook = async (req: Request, res: Response) => {
   try {
     const db = getDB();
     const collection = db.collection('books');
-    await collection.insertOne(req.body);
+
+    const book = req.body;
+    const authorId = book.authorId;
+    delete book.authorId;
+    book.authorId = new ObjectId(authorId);
+
+    await collection.insertOne(book);
 
     res.status(201).json(req.body);
   } catch (err) {

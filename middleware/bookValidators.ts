@@ -8,14 +8,14 @@ const allowed = [
   'name',
   'publicationYear',
   'publisher',
-  'author',
+  'authorId',
   'genres',
   'format',
   'pageCount',
 ];
 
 /**
- * @description: Middleware to prevent adding fields that don't belong to a book resource
+ * @description Middleware to prevent adding fields that don't belong to a book resource
  */
 export const rejectUnknownFields = (
   req: Request,
@@ -34,7 +34,7 @@ export const rejectUnknownFields = (
 };
 
 /**
- * @description: Validation asserting that all fields must be present
+ * @description Validation asserting that all fields must be present
  */
 export const fullValidation = [
   body('name').trim().notEmpty().withMessage('Name must not be empty'),
@@ -48,10 +48,9 @@ export const fullValidation = [
     .trim()
     .isLength({ min: 2 })
     .withMessage('Publisher must not be empty'),
-  body('author')
-    .trim()
-    .isLength({ min: 2 })
-    .withMessage('Author name must not be empty'),
+  body('authorId')
+    .isMongoId()
+    .withMessage('authorId must be a MongoDB ObjectID'),
   body('genres')
     .isArray({ min: 1 })
     .withMessage('Genres should be a list with at least one genre'),
@@ -91,11 +90,10 @@ export const optionalValidation = [
     .optional({ checkFalsy: true })
     .isLength({ min: 2 })
     .withMessage('Publisher must not be empty'),
-  body('author')
-    .trim()
+  body('authorId')
     .optional({ checkFalsy: true })
-    .isLength({ min: 2 })
-    .withMessage('Author name must not be empty'),
+    .isMongoId()
+    .withMessage('authorId must be a MongoDB ObjectID'),
   body('genres')
     .optional({ checkFalsy: true })
     .isArray({ min: 1 })

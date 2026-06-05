@@ -4,7 +4,7 @@ import {
   rejectUnknownFields,
   fullValidation,
   optionalValidation,
-} from '../middleware/validators.js';
+} from '../middleware/bookValidators.js';
 
 import {
   getAllBooks,
