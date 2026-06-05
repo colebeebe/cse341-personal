@@ -5,7 +5,7 @@ import { defineConfig } from 'eslint/config';
 export default defineConfig([
   {
     files: ['**/*.{ts}'],
-    extends: [js.config.recommended],
+    extends: [js.configs.recommended],
     languageOptions: {
       emcaVersion: 2020,
       globals: globals.browser,
