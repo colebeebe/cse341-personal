@@ -1,9 +1,8 @@
-import type { Request, Response, NextFunction } from 'express';
-
-const { body } = require('express-validator');
+import { Request, Response, NextFunction } from 'express';
+import { body } from 'express-validator';
 
 /**
- * Allowed fields in a given book resource
+ * @description Allowed fields in a given book resource
  */
 const allowed = [
   'name',
@@ -16,9 +15,9 @@ const allowed = [
 ];
 
 /**
- * Middleware to prevent adding fields that don't belong to a book resource
+ * @description: Middleware to prevent adding fields that don't belong to a book resource
  */
-const rejectUnkownFields = (
+export const rejectUnknownFields = (
   req: Request,
   res: Response,
   next: NextFunction,
@@ -35,9 +34,9 @@ const rejectUnkownFields = (
 };
 
 /**
- * Validation asserting that all fields must be present
+ * @description: Validation asserting that all fields must be present
  */
-const fullValidation = [
+export const fullValidation = [
   body('name').trim().notEmpty().withMessage('Name must not be empty'),
   body('publicationYear')
     .isInt()
@@ -72,9 +71,9 @@ const fullValidation = [
 ];
 
 /**
- * Validation for PATCH (fields are otptional)
+ * @description Validation for PATCH (fields are otptional)
  */
-const optionalValidation = [
+export const optionalValidation = [
   body('name')
     .trim()
     .optional({ checkFalsy: true })
@@ -120,9 +119,3 @@ const optionalValidation = [
     .withMessage('Page count must be a number')
     .toInt(),
 ];
-
-module.exports = {
-  rejectUnkownFields,
-  fullValidation,
-  optionalValidation,
-};

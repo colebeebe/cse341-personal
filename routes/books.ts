@@ -1,32 +1,31 @@
-const {
-  rejectUnkownFields,
+import { Router } from 'express';
+
+import {
+  rejectUnknownFields,
   fullValidation,
   optionalValidation,
-} = require('../middleware/validators.ts');
+} from '#middleware/validators.js';
 
-const {
+import {
   getAllBooks,
   getBookById,
   createBook,
   updateBook,
   patchBook,
   deleteBook,
-} = require('../controllers/books');
+} from '#controllers/books.js';
 
-/**
- * Base route: /books
- */
-const bookRouter = require('express').Router();
+const router = Router();
 
-bookRouter.get('/', getAllBooks);
-bookRouter.get('/:id', getBookById);
+router.get('/', getAllBooks);
+router.get('/:id', getBookById);
 
-bookRouter.post('/', rejectUnkownFields, fullValidation, createBook);
+router.post('/', rejectUnknownFields, fullValidation, createBook);
 
-bookRouter.put('/:id', rejectUnkownFields, fullValidation, updateBook);
+router.put('/:id', rejectUnknownFields, fullValidation, updateBook);
 
-bookRouter.patch('/:id', rejectUnkownFields, optionalValidation, patchBook);
+router.patch('/:id', rejectUnknownFields, optionalValidation, patchBook);
 
-bookRouter.delete('/:id', deleteBook);
+router.delete('/:id', deleteBook);
 
-module.exports = bookRouter;
+export default router;

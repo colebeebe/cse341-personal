@@ -1,24 +1,15 @@
-require('dotenv').config({ path: '.env' });
+import express from 'express';
 
-const express = require('express');
-const connectDB = require('./models/db');
-const { engine } = require('express-handlebars');
+import { connectDB } from '#models/db.js';
+import router from '#routes/index.js';
 
 const PORT = process.env.PORT || 3000;
 
 const app = express();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use('/', router);
 
-app.engine('.hbs', engine({ extname: '.hbs' }));
-app.set('view engine', '.hbs');
-
-app.use(require('./middleware/cors'));
-
-app.use('/', require('./routes'));
-
-app.listen(PORT, async () => {
-  await connectDB();
+app.listen(PORT, () => {
+  connectDB();
   console.log(`Listening at http://localhost:${PORT}`);
 });

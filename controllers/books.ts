@@ -1,18 +1,17 @@
-import type { Request, Response, NextFunction } from 'express';
-
-const { getDB } = require('../models/db');
-const { ObjectId } = require('mongodb');
-const { validationResult } = require('express-validator');
+import { Request, Response, NextFunction } from 'express';
+import getDB from '#models/db.js';
+import { ObjectId } from 'mongodb';
+import { validationResult } from 'express-validator';
 
 type BookParams = {
   id: string;
 };
 
 /**
- * @description Get a list of every book
+ * @description Get a list of all books
  * @route GET /books
  */
-const getAllBooks = async (req: Request, res: Response) => {
+export const getAllBooks = async (req: Request, res: Response) => {
   try {
     const db = getDB();
     const collection = db.collection('books');
@@ -21,10 +20,9 @@ const getAllBooks = async (req: Request, res: Response) => {
     res.status(200).json(books);
   } catch (err) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: String(err) });
+      return res.status(500).json({ error: err.message });
     }
+    res.status(500).json({ error: String(err) });
   }
 };
 
@@ -32,11 +30,11 @@ const getAllBooks = async (req: Request, res: Response) => {
  * @description Get a single book
  * @route GET /books/:id
  */
-const getBookById = async (req: Request<BookParams>, res: Response) => {
+export const getBookById = async (req: Request<BookParams>, res: Response) => {
   try {
     const db = getDB();
     const collection = db.collection('books');
-    const book = await collection.findOne({ _id: new ObjectId(req.params.id) });
+    let book = await collection.findOne({ _id: new ObjectId(req.params.id) });
 
     if (!book) {
       res.status(404).json({ error: 'Book not found' });
@@ -45,10 +43,9 @@ const getBookById = async (req: Request<BookParams>, res: Response) => {
     res.status(200).json(book);
   } catch (err) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: String(err) });
+      return res.status(500).json({ error: err.message });
     }
+    res.status(500).json({ error: String(err) });
   }
 };
 
@@ -56,7 +53,7 @@ const getBookById = async (req: Request<BookParams>, res: Response) => {
  * @description Create a new book resource
  * @route POST /books
  */
-const createBook = async (req: Request, res: Response) => {
+export const createBook = async (req: Request, res: Response) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -71,10 +68,9 @@ const createBook = async (req: Request, res: Response) => {
     res.status(201).json(req.body);
   } catch (err) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: String(err) });
+      return res.status(500).json({ error: err.message });
     }
+    res.status(500).json({ error: String(err) });
   }
 };
 
@@ -82,7 +78,7 @@ const createBook = async (req: Request, res: Response) => {
  * @description Update a book (by sending an entire book object)
  * @route PUT /books/:id
  */
-const updateBook = async (req: Request<BookParams>, res: Response) => {
+export const updateBook = async (req: Request<BookParams>, res: Response) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -106,18 +102,17 @@ const updateBook = async (req: Request<BookParams>, res: Response) => {
     res.status(200).json(req.body);
   } catch (err) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: String(err) });
+      return res.status(500).json({ error: err.message });
     }
+    res.status(500).json({ error: String(err) });
   }
 };
 
 /**
- * @description Update a book (by sending a single attribute)
+ * @description Update a book (by sending part of a book resource)
  * @route PATCH /books/:id
  */
-const patchBook = async (req: Request<BookParams>, res: Response) => {
+export const patchBook = async (req: Request<BookParams>, res: Response) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -133,6 +128,7 @@ const patchBook = async (req: Request<BookParams>, res: Response) => {
     'format',
     'pageCount',
   ];
+
   const updates: Record<string, any> = {};
 
   for (const field of fields) {
@@ -160,10 +156,9 @@ const patchBook = async (req: Request<BookParams>, res: Response) => {
     res.status(200).json(book);
   } catch (err) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: String(err) });
+      return res.status(500).json({ error: err.message });
     }
+    res.status(500).json({ error: String(err) });
   }
 };
 
@@ -171,7 +166,7 @@ const patchBook = async (req: Request<BookParams>, res: Response) => {
  * @description Delete a book
  * @route DELETE /books/:id
  */
-const deleteBook = async (req: Request<BookParams>, res: Response) => {
+export const deleteBook = async (req: Request<BookParams>, res: Response) => {
   try {
     const db = getDB();
     const collection = db.collection('books');
@@ -187,18 +182,8 @@ const deleteBook = async (req: Request<BookParams>, res: Response) => {
     res.status(204).send();
   } catch (err) {
     if (err instanceof Error) {
-      res.status(500).json({ error: err.message });
-    } else {
-      res.status(500).json({ error: String(err) });
+      return res.status(500).json({ error: err.message });
     }
+    res.status(500).json({ error: String(err) });
   }
-};
-
-module.exports = {
-  getAllBooks,
-  getBookById,
-  createBook,
-  updateBook,
-  patchBook,
-  deleteBook,
 };

@@ -4,10 +4,10 @@ import { defineConfig } from 'eslint/config';
 
 export default defineConfig([
   {
-    files: ['**/*.{js}'],
-    extends: [js.configs.recommended],
+    files: ['**/*.{ts}'],
+    extends: [js.config.recommended],
     languageOptions: {
-      ecmaVersion: 2020,
+      emcaVersion: 2020,
       globals: globals.browser,
     },
   },
@@ -18,7 +18,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['./index.js', './models/db.js'],
+    files: ['./index.ts', './models/db.ts'],
     rules: {
       'no-console': 'off',
     },

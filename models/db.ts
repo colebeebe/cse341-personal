@@ -1,4 +1,4 @@
-const { MongoClient } = require('mongodb');
+import { MongoClient } from 'mongodb';
 
 const uri: string = process.env.MONGO_URI || '';
 
@@ -17,4 +17,4 @@ export const connectDB = async () => {
   }
 };
 
-module.exports = () => db;
+export default () => db;
