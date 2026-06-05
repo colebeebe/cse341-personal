@@ -2,12 +2,12 @@
   "name": "cse341-personal",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.ts",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon --env-file=.env index.js",
+    "start": "node index.ts",
+    "dev": "nodemon",
     "lint": "eslint .",
-    "swagger": "node swagger.js"
+    "swagger": "node swagger.ts"
   },
   "keywords": [],
   "author": "",
@@ -19,20 +19,26 @@
       "onFail": "download"
     }
   },
-  "type": "module",
+  "type": "commonjs",
   "dependencies": {
     "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
     "express": "^5.2.1",
+    "express-handlebars": "^9.0.1",
     "express-validator": "^7.3.2",
     "mongodb": "^7.2.0",
     "swagger-ui-express": "^5.0.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.9.1",
     "eslint": "^10.4.0",
     "eslint-config-prettier": "^10.1.8",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
-    "swagger-autogen": "^2.23.7"
+    "swagger-autogen": "^2.23.7",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
   }
 }

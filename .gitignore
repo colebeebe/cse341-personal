@@ -52,4 +52,4 @@ Desktop.ini
 
 # Web development
 .env
-
+dist/

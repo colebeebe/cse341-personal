@@ -1,12 +1,18 @@
-import { getDB } from '../../models/db.js';
-import { ObjectId } from 'mongodb';
-import { validationResult } from 'express-validator';
+import type { Request, Response, NextFunction } from 'express';
+
+const { getDB } = require('../models/db');
+const { ObjectId } = require('mongodb');
+const { validationResult } = require('express-validator');
+
+type BookParams = {
+  id: string;
+};
 
 /**
- * Get a list of every book
- * GET /books
+ * @description Get a list of every book
+ * @route GET /books
  */
-export const getAllBooks = async (req, res) => {
+const getAllBooks = async (req: Request, res: Response) => {
   try {
     const db = getDB();
     const collection = db.collection('books');
@@ -14,15 +20,19 @@ export const getAllBooks = async (req, res) => {
 
     res.status(200).json(books);
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: String(err) });
+    }
   }
 };
 
 /**
- * Get a single book
- * GET /books/:id
+ * @description Get a single book
+ * @route GET /books/:id
  */
-export const getBookById = async (req, res) => {
+const getBookById = async (req: Request<BookParams>, res: Response) => {
   try {
     const db = getDB();
     const collection = db.collection('books');
@@ -34,15 +44,19 @@ export const getBookById = async (req, res) => {
 
     res.status(200).json(book);
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: String(err) });
+    }
   }
 };
 
 /**
- * Create a new book resource
- * POST /books
+ * @description Create a new book resource
+ * @route POST /books
  */
-export const createBook = async (req, res) => {
+const createBook = async (req: Request, res: Response) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -56,15 +70,19 @@ export const createBook = async (req, res) => {
 
     res.status(201).json(req.body);
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: String(err) });
+    }
   }
 };
 
 /**
- * Update a book (by sending an entire book object)
- * PUT /books/:id
+ * @description Update a book (by sending an entire book object)
+ * @route PUT /books/:id
  */
-export const updateBook = async (req, res) => {
+const updateBook = async (req: Request<BookParams>, res: Response) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -87,15 +105,19 @@ export const updateBook = async (req, res) => {
 
     res.status(200).json(req.body);
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: String(err) });
+    }
   }
 };
 
 /**
- * Update a book (by sending a single attribute)
- * PATCH /books/:id
+ * @description Update a book (by sending a single attribute)
+ * @route PATCH /books/:id
  */
-export const patchBook = async (req, res) => {
+const patchBook = async (req: Request<BookParams>, res: Response) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
@@ -111,7 +133,7 @@ export const patchBook = async (req, res) => {
     'format',
     'pageCount',
   ];
-  const updates = {};
+  const updates: Record<string, any> = {};
 
   for (const field of fields) {
     if (req.body[field] !== undefined) {
@@ -137,15 +159,19 @@ export const patchBook = async (req, res) => {
 
     res.status(200).json(book);
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: String(err) });
+    }
   }
 };
 
 /**
- * Delete a book
- * DELETE /books/:id
+ * @description Delete a book
+ * @route DELETE /books/:id
  */
-export const deleteBook = async (req, res) => {
+const deleteBook = async (req: Request<BookParams>, res: Response) => {
   try {
     const db = getDB();
     const collection = db.collection('books');
@@ -160,6 +186,19 @@ export const deleteBook = async (req, res) => {
 
     res.status(204).send();
   } catch (err) {
-    res.status(500).json({ error: err.toString() });
+    if (err instanceof Error) {
+      res.status(500).json({ error: err.message });
+    } else {
+      res.status(500).json({ error: String(err) });
+    }
   }
+};
+
+module.exports = {
+  getAllBooks,
+  getBookById,
+  createBook,
+  updateBook,
+  patchBook,
+  deleteBook,
 };

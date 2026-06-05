@@ -1,4 +1,6 @@
-const corsMiddleware = (req, res, next) => {
+import type { Request, Response, NextFunction } from 'express';
+
+const corsMiddleware = (req: Request, res: Response, next: NextFunction) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
     'Access-Control-Headers',
@@ -11,4 +13,4 @@ const corsMiddleware = (req, res, next) => {
   next();
 };
 
-export default corsMiddleware;
+module.exports = corsMiddleware;

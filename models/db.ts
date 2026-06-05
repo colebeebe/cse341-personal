@@ -1,9 +1,10 @@
-import { MongoClient } from 'mongodb';
+const { MongoClient } = require('mongodb');
 
-const uri = process.env.MONGO_URI;
+const uri: string = process.env.MONGO_URI || '';
+
 const client = new MongoClient(uri);
 
-let db = null;
+let db: any = null;
 
 export const connectDB = async () => {
   try {
@@ -16,4 +17,4 @@ export const connectDB = async () => {
   }
 };
 
-export const getDB = () => db;
+module.exports = () => db;
