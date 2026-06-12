@@ -1,19 +1,34 @@
-import express from 'express';
+import { ApolloServer } from '@apollo/server';
+import { startStandaloneServer } from '@apollo/server/standalone';
 
 import { connectDB } from './models/db.js';
-import cors from './middleware/cors.js';
-import router from './routes/index.js';
 
-const PORT = process.env.PORT || 3000;
+import typeDefs from './graphql/schema/index.js';
+import resolvers from './graphql/resolvers/index.js';
 
-const app = express();
+connectDB();
 
-app.use(express.json());
-app.use(cors);
+const PORT = Number(process.env.PORT) || 3000;
 
-app.use('/', router);
-
-app.listen(PORT, () => {
-  connectDB();
-  console.log(`Listening at http://localhost:${PORT}`);
+const server = new ApolloServer({
+  typeDefs,
+  resolvers,
 });
+
+const { url } = await startStandaloneServer(server, {
+  listen: { port: PORT },
+  // context: async ({ req }) => {
+  //   const auth = req.headers.authorization;
+
+  //   if (!auth || !auth.startsWith('Bearer ')) {
+  //     throw new Error('Not authenticated');
+  //   }
+
+  //   const token = auth.replace('Bearer ', '');
+
+  //   // TODO: Verify OAuth token here
+  //   return {};
+  // },
+});
+
+console.log(`Listening at http://localhost:${PORT}`);
