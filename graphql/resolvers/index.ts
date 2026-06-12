@@ -3,8 +3,13 @@ import {
   getAllBooks,
   getOneBook,
   getBooksByAuthorId,
+  createNewBook,
 } from '../../controllers/books.js';
-import { getAllAuthors, getOneAuthor } from '../../controllers/authors.js';
+import {
+  getAllAuthors,
+  getOneAuthor,
+  createNewAuthor,
+} from '../../controllers/authors.js';
 
 type BookArgs = {
   id: string;
@@ -14,6 +19,27 @@ type BookArgs = {
 type AuthorArgs = {
   id: string;
   _id: ObjectId;
+};
+
+type Book = {
+  book: {
+    name: string;
+    publicationYear: number;
+    publisher: string;
+    genres: string[];
+    format: string;
+    pageCount: string;
+    authorId: string;
+  };
+};
+
+type Author = {
+  author: {
+    firstName: string;
+    lastName: string;
+    birthCountry: string;
+    birthdate: string;
+  };
 };
 
 export default {
@@ -29,16 +55,28 @@ export default {
       return getOneAuthor(id);
     },
   },
+
   Book: {
     author({ authorId }: BookArgs) {
       const id = authorId.toString();
       return getOneAuthor(id);
     },
   },
+
   Author: {
     books({ _id }: AuthorArgs) {
       const id = _id.toString();
       return getBooksByAuthorId(id);
+    },
+  },
+
+  Mutation: {
+    addBook(_: unknown, { book }: Book) {
+      return createNewBook(book);
+    },
+
+    addAuthor(_: unknown, { author }: Author) {
+      return createNewAuthor(author);
     },
   },
 };
