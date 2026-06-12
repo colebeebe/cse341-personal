@@ -15,7 +15,7 @@ export const getAllAuthors = async () => {
     const authors = await collection.find({}).toArray();
 
     return authors;
-  } catch (err) {
+  } catch (err: any) {
     return err;
   }
 };
@@ -27,7 +27,7 @@ export const getOneAuthor = async (id: string) => {
     const author = await collection.findOne(new ObjectId(id));
 
     return author;
-  } catch (err) {
+  } catch (err: any) {
     return err;
   }
 };
@@ -42,7 +42,7 @@ export const createNewAuthor = async (author: Author) => {
     await collection.insertOne(newAuthor);
 
     return author;
-  } catch (err) {
+  } catch (err: any) {
     return err;
   }
 };

@@ -18,7 +18,7 @@ export const getAllBooks = async () => {
     const books = await collection.find({}).toArray();
 
     return books;
-  } catch (err) {
+  } catch (err: any) {
     return err;
   }
 };
@@ -30,7 +30,7 @@ export const getOneBook = async (id: string) => {
     const book = await collection.findOne(new ObjectId(id));
 
     return book;
-  } catch (err) {
+  } catch (err: any) {
     return err;
   }
 };
@@ -44,7 +44,7 @@ export const getBooksByAuthorId = async (id: string) => {
       .toArray();
 
     return books;
-  } catch (err) {
+  } catch (err: any) {
     return err;
   }
 };
@@ -59,7 +59,7 @@ export const createNewBook = async (book: Book) => {
     await collection.insertOne(newBook);
 
     return book;
-  } catch (err) {
+  } catch (err: any) {
     return err;
   }
 };
