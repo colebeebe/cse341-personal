@@ -1,5 +1,6 @@
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
+import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { connectDB } from './models/db.js';
 import { toHeaderMap } from './utils/helpers.js';
@@ -15,6 +16,7 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
+  plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
 });
 
 await server.start();
