@@ -8,8 +8,8 @@ router.get('/', (req, res) => {
   const message = `
     ${
       req.isAuthenticated()
-        ? '<p>If you would like to logout, click <a href="/logout">here</a> or visit /logout at any time .</p>'
-        : '<p>It appears you are not logged in. <a href="/login">Log in</a>.</p>'
+        ? '<p>If you would like to logout, click <a href="/logout">here</a> or visit /logout at any time.</p>'
+        : '<p>It appears you are not logged in. <a href="/login">Log in</a>.<p><strong>Visit /logout to logout at any time.</strong></p>'
     }
     <p>View the <a href="/graphql">documentation</a>.</p>
   `;
