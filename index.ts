@@ -16,8 +16,8 @@ import { ensureAuth } from './middleware/auth.js';
 import router from './routes/index.js';
 
 // GraphQL Imports
-import typeDefs from './graphql/schema/index.js';
-import resolvers from './graphql/resolvers/index.js';
+import typeDefs from './graphql/schema.js';
+import resolvers from './graphql/resolver.js';
 
 // Environment variables
 const PORT = Number(process.env.PORT) || 3000;

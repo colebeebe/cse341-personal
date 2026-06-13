@@ -4,12 +4,14 @@ import {
   getOneBook,
   getBooksByAuthorId,
   createNewBook,
-} from '../../controllers/books.js';
+  deleteBookResource,
+} from '../controllers/books.js';
 import {
   getAllAuthors,
   getOneAuthor,
   createNewAuthor,
-} from '../../controllers/authors.js';
+  deleteAuthorResource,
+} from '../controllers/authors.js';
 
 type BookArgs = {
   id: string;
@@ -77,6 +79,14 @@ export default {
 
     addAuthor(_: unknown, { author }: Author) {
       return createNewAuthor(author);
+    },
+
+    deleteBook(_: unknown, { id }: BookArgs) {
+      return deleteBookResource(id);
+    },
+
+    deleteAuthor(_: unknown, { id }: AuthorArgs) {
+      return deleteAuthorResource(id);
     },
   },
 };

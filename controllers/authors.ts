@@ -52,3 +52,19 @@ export const createNewAuthor = async (author: Author) => {
     return err;
   }
 };
+
+export const deleteAuthorResource = async (id: string) => {
+  try {
+    const db = getDB();
+    const collection = db.collection('authors');
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    return {
+      success: result.deletedCount === 1,
+      message:
+        result.deletedCount === 1 ? 'Resource deleted' : 'Author not found',
+    };
+  } catch (err: any) {
+    return err;
+  }
+};

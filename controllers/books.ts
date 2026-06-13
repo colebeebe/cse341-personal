@@ -29,6 +29,10 @@ export const getOneBook = async (id: string) => {
     const collection = db.collection('books');
     const book = await collection.findOne(new ObjectId(id));
 
+    if (!book) {
+      throw new Error('Book not found');
+    }
+
     return book;
   } catch (err: any) {
     return err;
@@ -59,6 +63,22 @@ export const createNewBook = async (book: Book) => {
     await collection.insertOne(newBook);
 
     return book;
+  } catch (err: any) {
+    return err;
+  }
+};
+
+export const deleteBookResource = async (id: string) => {
+  try {
+    const db = getDB();
+    const collection = db.collection('books');
+    const result = await collection.deleteOne({ _id: new ObjectId(id) });
+
+    return {
+      success: result.deletedCount === 1,
+      message:
+        result.deletedCount === 1 ? 'Resource deleted' : 'Book not found',
+    };
   } catch (err: any) {
     return err;
   }

@@ -17,6 +17,10 @@ export default `#graphql
     birthdate: String!
     books: [Book!]
   }
+  type DeleteResult {
+    success: Boolean!
+    message: String
+  }
   type Query {
     books: [Book!]!
     authors: [Author!]!
@@ -26,6 +30,8 @@ export default `#graphql
   type Mutation {
     addBook(book: AddBookInput!): Book!
     addAuthor(author: AddAuthorInput!): Author!
+    deleteBook(id: ID!): DeleteResult!
+    deleteAuthor(id: ID!): DeleteResult!
   }
   input AddBookInput {
     name: String!
