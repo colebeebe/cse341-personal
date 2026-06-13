@@ -2,10 +2,14 @@
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
+import cors from 'cors';
 
 // Helper imports
 import { connectDB } from './models/db.js';
 import { toHeaderMap } from './utils/helpers.js';
+
+// Main router
+import router from './routes/index.js';
 
 // GraphQL Imports
 import typeDefs from './graphql/schema/index.js';
@@ -27,10 +31,9 @@ const server = new ApolloServer({
 await server.start();
 
 app.use(express.json());
+app.use(cors());
 
-app.get('/health', (req, res) => {
-  res.send('OK');
-});
+app.use('/', router);
 
 // Use Apollo Server for GraphQL requests
 app.use('/graphql', async (req, res) => {
