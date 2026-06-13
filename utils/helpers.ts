@@ -10,7 +10,7 @@ import { ObjectId } from 'mongodb';
 declare global {
   namespace Express {
     interface User {
-      id: ObjectId;
+      _id: ObjectId;
     }
   }
 }
@@ -64,14 +64,14 @@ export function passportConfig(passport: PassportStatic) {
   );
 
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    done(null, user._id);
   });
 
   passport.deserializeUser(async (id, done) => {
     try {
       const db = getDB();
       const collection = db.collection('users');
-      const user = await collection.findOne({ googleId: id });
+      const user = await collection.findOne({ _id: id });
 
       done(null, user);
     } catch (err: any) {
