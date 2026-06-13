@@ -1,25 +1,29 @@
+// Package imports
 import express from 'express';
 import { ApolloServer } from '@apollo/server';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
+// Helper imports
 import { connectDB } from './models/db.js';
 import { toHeaderMap } from './utils/helpers.js';
 
+// GraphQL Imports
 import typeDefs from './graphql/schema/index.js';
 import resolvers from './graphql/resolvers/index.js';
 
+// Environment variables
 const PORT = Number(process.env.PORT) || 3000;
 const NODE_ENV = String(process.env.NODE_ENV) || 'production';
 
 const app = express();
 
+// Apollo Server setup
 const server = new ApolloServer({
   typeDefs,
   resolvers,
   introspection: true,
   plugins: [ApolloServerPluginLandingPageLocalDefault({ embed: true })],
 });
-
 await server.start();
 
 app.use(express.json());
@@ -28,6 +32,7 @@ app.get('/health', (req, res) => {
   res.send('OK');
 });
 
+// Use Apollo Server for GraphQL requests
 app.use('/graphql', async (req, res) => {
   const headers = toHeaderMap(req.headers);
   const response = await server.executeHTTPGraphQLRequest({
@@ -57,11 +62,16 @@ app.use('/graphql', async (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
+try {
   connectDB();
-  if (NODE_ENV.includes('dev')) {
-    console.log(`Listening on http://localhost:${PORT}`);
-  } else {
-    console.log(`Listening on port ${PORT}`);
-  }
-});
+
+  app.listen(PORT, () => {
+    if (NODE_ENV.includes('dev')) {
+      console.log(`Listening at http://localhost:${PORT}`);
+    } else {
+      console.log(`Listening on port ${PORT}`);
+    }
+  });
+} catch (err: any) {
+  console.log(err);
+}
