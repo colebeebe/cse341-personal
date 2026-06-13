@@ -67,11 +67,11 @@ export function passportConfig(passport: PassportStatic) {
     done(null, user._id);
   });
 
-  passport.deserializeUser(async (id, done) => {
+  passport.deserializeUser(async (id: string, done) => {
     try {
       const db = getDB();
       const collection = db.collection('users');
-      const user = await collection.findOne({ _id: id });
+      const user = await collection.findOne({ _id: new ObjectId(id) });
 
       done(null, user);
     } catch (err: any) {
