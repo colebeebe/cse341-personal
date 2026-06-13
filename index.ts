@@ -10,6 +10,7 @@ import { MongoStore } from 'connect-mongo';
 // Helper imports
 import { connectDB } from './models/db.js';
 import { toHeaderMap, passportConfig } from './utils/helpers.js';
+import { ensureAuth } from './middleware/auth.js';
 
 // Main router
 import router from './routes/index.js';
@@ -74,7 +75,7 @@ app.use(cors());
 app.use('/', router);
 
 // Use Apollo Server for GraphQL requests
-app.use('/graphql', async (req, res) => {
+app.use('/graphql', ensureAuth, async (req, res) => {
   const headers = toHeaderMap(req.headers);
   const response = await server.executeHTTPGraphQLRequest({
     context: async () => ({
