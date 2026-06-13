@@ -21,7 +21,7 @@ router.get('/login', (req, res) => {
 });
 
 router.get('/logout', (req, res, next) => {
-  req.logout((err) => {
+  req.logout({ keepSessionInfo: true }, (err) => {
     if (err) {
       return next(err);
     }
