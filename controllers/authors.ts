@@ -14,6 +14,10 @@ export const getAllAuthors = async () => {
     const collection = db.collection('authors');
     const authors = await collection.find({}).toArray();
 
+    authors.forEach((a: any) => {
+      a.birthdate = a.birthdate.toISOString();
+    });
+
     return authors;
   } catch (err: any) {
     return err;
@@ -25,6 +29,8 @@ export const getOneAuthor = async (id: string) => {
     const db = getDB();
     const collection = db.collection('authors');
     const author = await collection.findOne(new ObjectId(id));
+
+    author.birthdate = author.birthdate.toISOString();
 
     return author;
   } catch (err: any) {
