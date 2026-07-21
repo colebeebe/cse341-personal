@@ -75,7 +75,7 @@ app.use(cors());
 app.use('/', router);
 
 // Use Apollo Server for GraphQL requests
-app.use('/graphql', ensureAuth, async (req, res) => {
+app.use('/graphql', async (req, res) => {
   const headers = toHeaderMap(req.headers);
   const response = await server.executeHTTPGraphQLRequest({
     context: async () => ({
